@@ -17,35 +17,35 @@ public class TestExceptionsUnchecked {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testNullPointerException() {
+    public void testPassNullObject() {
         thrown.expect(NullPointerException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.getObjectClass(null);
     }
 
     @Test
-    public void testArrayIndexOutOfBoundsException() {
+    public void testNonExistentIndex() {
         thrown.expect(ArrayIndexOutOfBoundsException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.printValueAtIndex(6);
     }
 
     @Test
-    public void testArithmeticException() {
+    public void testDivisionByZero() {
         thrown.expect(ArithmeticException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.calculateDivision(1, 0);
     }
 
     @Test
-    public void testNumberFormatException() {
+    public void testConvertLetterToInteger() {
         thrown.expect(NumberFormatException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.parseStringToInt("ABC");
     }
 
     @Test
-    public void testClassCastException() {
+    public void testObjectCastingToInteger() {
         thrown.expect(ClassCastException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.castToInteger("Hello World");
@@ -59,56 +59,56 @@ public class TestExceptionsUnchecked {
     }
 
     @Test
-    public void testUnsupportedOperationException() throws Exception {
+    public void testModifyFinalList() throws Exception {
         thrown.expect(UnsupportedOperationException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.removeValueFromListByIndex();
     }
 
     @Test
-    public void testConcurrentModificationException() {
+    public void testRemoveItemFromListDuringLoop() {
         thrown.expect(ConcurrentModificationException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.removeValueFromListDuringLoop(1);
     }
 
     @Test
-    public void testNoSuchElementException() {
+    public void testIterateNextNonExistentElement() {
         thrown.expect(NoSuchElementException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.iterateNextElementInListLoop(3);
     }
 
     @Test
-    public void testNegativeArraySizeException() {
+    public void testNegativeArraySize() {
         thrown.expect(NegativeArraySizeException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.createIntegerArray(-1);
     }
 
     @Test
-    public void testFileNotFoundException() throws FileNotFoundException {
+    public void testPassingNonExistentFile() throws FileNotFoundException {
         thrown.expect(FileNotFoundException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
-        uncheckedUtil.createScannerToReadFile("/invalid/path/to/file.txt");
+        uncheckedUtil.createScannerToReadFile("/euqui.txt");
     }
 
     @Test
-    public void testStringIndexOutOfBoundsException() {
+    public void testAccessingNonExistentStringIndex() {
         thrown.expect(StringIndexOutOfBoundsException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.getCharByIndex(20);
     }
 
     @Test
-    public void testEmptyStackException() {
+    public void testRemoveItemFromEmptyStack() {
         thrown.expect(EmptyStackException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.removeTopFromStack();
     }
 
     @Test
-    public void testIllegalMonitorStateException() throws InterruptedException {
+    public void testMakeObjectWait() throws InterruptedException {
         thrown.expect(IllegalMonitorStateException.class);
         ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
         uncheckedUtil.makeObjectWait(new Object());
