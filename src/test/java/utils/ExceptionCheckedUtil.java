@@ -3,7 +3,6 @@ package utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -25,67 +24,63 @@ import java.util.concurrent.TimeoutException;
 abstract class AbstractExample {}
 
 class NonCloneableExample {
-    private String honor = "O Honrado";
+    private String honor = "The Honored";
 }
 
 public class ExceptionCheckedUtil {
-
     static final Path FILE_PATH = Paths.get("/home/almaviva-linux/eu.txt");
 
-    public static void throwMalformedURLException() throws MalformedURLException {
-        URL invalidUrl = new URL("htp://www.exemplo.com");
+
+    public URL createURL(String path) throws MalformedURLException {
+    	return new URL(path);
     }
 
-    public static void throwParseException() throws ParseException {
+    public Date createDate(String date) throws ParseException {
+    	//"2024-21-21"
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
-        Date date = dateFormat.parse("2024-21-21");
+        return dateFormat.parse(date);
     }
 
-    public static void throwURISyntaxException() throws URISyntaxException {
-        URI invalidUri = new URI("ht tp://example.com");
+    public URI createURI(String path) throws URISyntaxException {
+        return new URI(path);
+        
     }
 
-    public static void throwInstantiationException() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public static void instantiateClass() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         AbstractExample instanceError = AbstractExample.class.getDeclaredConstructor().newInstance();
     }
 
-    public static void throwClassNotFoundException() throws ClassNotFoundException {
-        Class<?> clazz = Class.forName("com.Class");
+    public <T> String getClassName(String className) throws ClassNotFoundException {
+        Class<?> clazz = Class.forName(className);
+        return clazz.getName();
     }
 
-    public static void throwTimeoutException() throws InterruptedException, ExecutionException, TimeoutException {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+    public void setThreadTimeout(int value) throws InterruptedException, ExecutionException, TimeoutException {
+        //30
+    	ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<String> future = executor.submit(() -> {
             Thread.sleep(5000);
-            return "Tarefa concluída";
+            return "Task completed";
         });
-        future.get(30, TimeUnit.MILLISECONDS);
+        future.get(value, TimeUnit.MILLISECONDS);
     }
 
-    public static void throwIOException() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH.toString()))) {
+    public void printFileContent() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH.toString()));
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
-        }
     }
 
-    public static void throwFileAlreadyExistsException() throws IOException {
+    public void createFile(String path) throws IOException {
         Files.createFile(FILE_PATH);
     }
 
-    public static void throwNoSuchFieldException() throws NoSuchFieldException, SecurityException {
+    public String accessClassField() throws NoSuchFieldException, SecurityException {
         NonCloneableExample example = new NonCloneableExample();
         Class<?> clazz = example.getClass();
-        Field field = clazz.getDeclaredField("age");
-    }
-
-    public static void throwIllegalAccessException() throws NoSuchFieldException, SecurityException, IllegalAccessException {
-        NonCloneableExample example = new NonCloneableExample();
-        Class<?> clazz = example.getClass();
-        Field field = clazz.getDeclaredField("honor");
-        field.setAccessible(false);
+        return clazz.getDeclaredField("age").toString();
     }
 }
