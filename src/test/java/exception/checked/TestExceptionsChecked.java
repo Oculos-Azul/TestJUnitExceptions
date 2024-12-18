@@ -1,67 +1,83 @@
 package exception.checked;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.nio.file.FileAlreadyExistsException;
 import java.text.ParseException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import utils.ExceptionCheckedUtil;
 
-class TestExceptionsChecked {
-	
-	@Test
-	void testMalformedURLException() {
-		assertThrows(MalformedURLException.class, ExceptionCheckedUtil::throwMalformedURLException);
-	}
-	
-	@Test
-	void testParseException() {
-		assertThrows(ParseException.class, ExceptionCheckedUtil::throwParseException);
-	}
-	
-	@Test
-	void testURISyntaxException() {
-		assertThrows(URISyntaxException.class, ExceptionCheckedUtil::throwURISyntaxException);
-	}
-	
-	@Test
-	void testInstantiationException() {
-		assertThrows(InstantiationException.class, ExceptionCheckedUtil::throwInstantiationException);
-	}
-	
-	@Test
-	void testClassNotFoundException() {
-		assertThrows(ClassNotFoundException.class, ExceptionCheckedUtil::throwClassNotFoundException);
-	}
-	
-	@Test
-	void testTimeoutException() {
-		assertThrows(TimeoutException.class, ExceptionCheckedUtil::throwTimeoutException);
-	}
-	
-	@Test
-	void testIOException() {
-		assertThrows(IOException.class, ExceptionCheckedUtil::throwIOException);
-	}
-	
-	@Test
-	void testFileAlreadyExistsException() {
-		assertThrows(FileAlreadyExistsException.class, ExceptionCheckedUtil::throwFileAlreadyExistsException);
-	}
-	
-	@Test
-	void testNoSuchFieldException() {
-		assertThrows(NoSuchFieldException.class, ExceptionCheckedUtil::throwNoSuchFieldException);
-	}
-	
-	@Test
-	void testIllegalAccessException() {
-		assertThrows(IllegalAccessException.class, ExceptionCheckedUtil::throwIllegalAccessException);
-	}
+public class TestExceptionsChecked {
+	ExceptionCheckedUtil exceptionCheckedUtil = new ExceptionCheckedUtil();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void testMalformedURLException() throws MalformedURLException {
+        thrown.expect(MalformedURLException.class);
+        exceptionCheckedUtil.throwMalformedURLException();
+    }
+
+    @Test
+    public void testParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+        exceptionCheckedUtil.throwParseException();
+    }
+
+    @Test
+    public void testURISyntaxException() throws URISyntaxException {
+        thrown.expect(URISyntaxException.class);
+        exceptionCheckedUtil.throwURISyntaxException();
+    }
+
+    @Test
+    public void testInstantiationException() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        thrown.expect(InstantiationException.class);
+        exceptionCheckedUtil.throwInstantiationException();
+    }
+
+    @Test
+    public void testClassNotFoundException() throws ClassNotFoundException {
+        thrown.expect(ClassNotFoundException.class);
+        exceptionCheckedUtil.throwClassNotFoundException();
+    }
+
+    @Test
+    public void testTimeoutException() throws InterruptedException, ExecutionException, TimeoutException {
+        thrown.expect(TimeoutException.class);
+        exceptionCheckedUtil.throwTimeoutException();
+    }
+
+    @Test
+    public void testIOException() throws IOException {
+        thrown.expect(IOException.class);
+        exceptionCheckedUtil.throwIOException();
+    }
+
+    @Test
+    public void testFileAlreadyExistsException() throws IOException {
+        thrown.expect(FileAlreadyExistsException.class);
+        exceptionCheckedUtil.throwFileAlreadyExistsException();
+    }
+
+    @Test
+    public void testNoSuchFieldException() throws NoSuchFieldException, SecurityException {
+        thrown.expect(NoSuchFieldException.class);
+        exceptionCheckedUtil.throwNoSuchFieldException();
+    }
+
+    @Test
+    public void testIllegalAccessException() throws NoSuchFieldException, SecurityException, IllegalAccessException {
+        thrown.expect(IllegalAccessException.class);
+        exceptionCheckedUtil.throwIllegalAccessException();
+    }
 }
