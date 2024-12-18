@@ -1,85 +1,116 @@
 package exception.unchecked;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.io.FileNotFoundException;
 import java.util.ConcurrentModificationException;
 import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import utils.ExceptionUncheckedUtil;
 
-class TestExceptionsUnchecked {
+public class TestExceptionsUnchecked {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    void testNullPointException() {
-        assertThrows(NullPointerException.class, ExceptionUncheckedUtil::throwNullPointerException);
+    public void testNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.getObjectClass(null);
     }
 
     @Test
-    void testArrayIndexOutOfBoundsException() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, ExceptionUncheckedUtil::throwArrayIndexOutOfBoundsException);
+    public void testArrayIndexOutOfBoundsException() {
+        thrown.expect(ArrayIndexOutOfBoundsException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.printValueAtIndex(6);
     }
 
     @Test
-    void testArithmeticException() {
-        assertThrows(ArithmeticException.class, ExceptionUncheckedUtil::throwArithmeticException);
+    public void testArithmeticException() {
+        thrown.expect(ArithmeticException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.calculateDivision(1, 0);
     }
 
     @Test
-    void testNumberFormatException() {
-        assertThrows(NumberFormatException.class, ExceptionUncheckedUtil::throwNumberFormatException);
+    public void testNumberFormatException() {
+        thrown.expect(NumberFormatException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.parseStringToInt("ABC");
     }
 
     @Test
-    void testClassCastException() {
-        assertThrows(ClassCastException.class, ExceptionUncheckedUtil::throwClassCastException);
+    public void testClassCastException() {
+        thrown.expect(ClassCastException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.castToInteger("Hello World");
     }
 
     @Test
-    void testIndexOutOfBoundsException() {
-        assertThrows(IndexOutOfBoundsException.class, ExceptionUncheckedUtil::throwIndexOutOfBoundsException);
+    public void testIndexDoesNotExist() {
+        thrown.expect(IndexOutOfBoundsException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.getValueFromListByIndex(8);
     }
 
     @Test
-    void testUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, ExceptionUncheckedUtil::throwUnsupportedOperationException);
+    public void testUnsupportedOperationException() throws Exception {
+        thrown.expect(UnsupportedOperationException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.removeValueFromListByIndex();
     }
 
     @Test
-    void testConcurrentModificationException() {
-        assertThrows(ConcurrentModificationException.class, ExceptionUncheckedUtil::throwConcurrentModificationException);
+    public void testConcurrentModificationException() {
+        thrown.expect(ConcurrentModificationException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.removeValueFromListDuringLoop(1);
     }
 
     @Test
-    void testNoSuchElementException() {
-        assertThrows(NoSuchElementException.class, ExceptionUncheckedUtil::throwNoSuchElementException);
+    public void testNoSuchElementException() {
+        thrown.expect(NoSuchElementException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.iterateNextElementInListLoop(3);
     }
 
     @Test
-    void testNegativeArraySizeException() {
-        assertThrows(NegativeArraySizeException.class, ExceptionUncheckedUtil::throwNegativeArraySizeException);
+    public void testNegativeArraySizeException() {
+        thrown.expect(NegativeArraySizeException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.createIntegerArray(-1);
     }
 
     @Test
-    void testFileNotFoundException() {
-        assertThrows(FileNotFoundException.class, ExceptionUncheckedUtil::throwFileNotFoundException);
+    public void testFileNotFoundException() throws FileNotFoundException {
+        thrown.expect(FileNotFoundException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.createScannerToReadFile("/invalid/path/to/file.txt");
     }
 
     @Test
-    void testStringIndexOutOfBoundsException() {
-        assertThrows(StringIndexOutOfBoundsException.class, ExceptionUncheckedUtil::throwStringIndexOutOfBoundsException);
+    public void testStringIndexOutOfBoundsException() {
+        thrown.expect(StringIndexOutOfBoundsException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.getCharByIndex(20);
     }
 
     @Test
-    void testEmptyStackException() {
-        assertThrows(EmptyStackException.class, ExceptionUncheckedUtil::throwEmptyStackException);
+    public void testEmptyStackException() {
+        thrown.expect(EmptyStackException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.removeTopFromStack();
     }
 
     @Test
-    void testIllegalMonitorStateException() {
-        assertThrows(IllegalMonitorStateException.class, ExceptionUncheckedUtil::throwIllegalMonitorStateException);
+    public void testIllegalMonitorStateException() throws InterruptedException {
+        thrown.expect(IllegalMonitorStateException.class);
+        ExceptionUncheckedUtil uncheckedUtil = new ExceptionUncheckedUtil();
+        uncheckedUtil.makeObjectWait(new Object());
     }
 }
